@@ -2,6 +2,7 @@
 from __future__ import with_statement
 import os
 from shutil import rmtree
+import sys
 from uuid import uuid4
 
 from django.conf import settings
@@ -38,6 +39,7 @@ class Tests(TestCase):
         """
 
         self.root = os.path.dirname(__import__(settings.ROOT_URLCONF).__file__)
+        sys.path.append(self.root)
 
         # Add the test apps to INSTALLED_APPS.
         self.unique_id = str(uuid4()).replace("-", "")
