@@ -114,4 +114,4 @@ def overextends(parser, token):
     if nodelist.get_nodes_by_type(ExtendsNode):
         raise TemplateSyntaxError("'%s' cannot appear more than once "
                                   "in the same template" % bits[0])
-    return OverExtendsNode(nodelist, parent_name)
+    return OverExtendsNode(nodelist, parent_name, None)
