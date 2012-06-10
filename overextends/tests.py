@@ -26,7 +26,7 @@ class Tests(TestCase):
     """
     Test that ``overextends`` triggers across multiple project and
     app templates with the same relative path. To achieve this, we
-    need same template name to exist in multiple apps, as well as
+    need the same template name to exist in multiple apps, as well as
     at the project level, so we create some fake apps and a project
     template. These all used a unique ID to ensure they don't
     collide with anything in the project. When we're done, we clean
