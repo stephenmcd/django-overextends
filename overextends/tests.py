@@ -43,7 +43,7 @@ class Tests(TestCase):
 
         # Add the test apps to INSTALLED_APPS.
         self.unique_id = str(uuid4()).replace("-", "")
-        self.test_apps = ["app%s%s" % (i, self.unique_id) for i in range(2)]
+        self.test_apps = ["app%s%s" % (i, self.unique_id) for i in range(10)]
         settings.INSTALLED_APPS = list(settings.INSTALLED_APPS)
         settings.INSTALLED_APPS.extend(self.test_apps)
 
