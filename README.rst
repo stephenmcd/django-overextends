@@ -89,7 +89,7 @@ django-overextends by adding the ``overextends`` app to the
         'overextends',
     )
 
-Note that while the ``extends`` tag is provided by the package
+Note that while the ``overextends`` tag is provided by the package
 ``overextends.templatetags.overextends_tags``, it is unnecessary to use
 ``{% load overextends_tags %}`` in your templates. Like the ``extends``
 tag, ``overextends`` must be the first tag in your template, so it is
