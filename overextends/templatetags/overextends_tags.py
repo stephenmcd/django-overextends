@@ -103,7 +103,7 @@ class OverExtendsNode(ExtendsNode):
             return parent
         template = self.find_template(parent, context)
         if (isinstance(template.nodelist[0], ExtendsNode) and
-            template.nodelist[0].parent_name.resolve(context) == parent):
+                template.nodelist[0].parent_name.resolve(context) == parent):
             return self.find_template(parent, context, peeking=True)
         return template
 
