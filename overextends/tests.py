@@ -71,7 +71,7 @@ class Tests(TestCase):
     def _create_template(self, template_dir, test_string, extends):
         """
         Creates the test template in the given template directory, with
-        the test string injedcted that we'll use for the real test.
+        the test string injected that we'll use for the real test.
         """
         with open(os.path.join(template_dir, self.unique_id), "w") as f:
             template_vars = {
