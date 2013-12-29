@@ -13,6 +13,7 @@ from django.test import TestCase
 
 TEST_TEMPLATE = """
 
+{# avast ye mateys #}
 %(extends_string)s
 {%% block main %%}
 %(super_string)s
