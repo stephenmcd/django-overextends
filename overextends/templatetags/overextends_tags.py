@@ -4,7 +4,6 @@ import os
 from django import template
 from django.template import Template, TemplateSyntaxError, TemplateDoesNotExist
 from django.template.loader_tags import ExtendsNode
-from django.template.loader import find_template_loader
 
 
 register = template.Library()
@@ -44,9 +43,26 @@ class OverExtendsNode(ExtendsNode):
 
         # These imports want settings, which aren't available when this
         # module is imported to ``add_to_builtins``, so do them here.
-        from django.template.loaders.app_directories import app_template_dirs
         from django.conf import settings
 
+        # Find the app_template_dirs (moved in Django 1.8)
+        import django.template.loaders.app_directories as app_directories
+        try:
+            # Django >= 1.8
+            get_app_template_dirs = app_directories.get_app_template_dirs
+            app_template_dirs = get_app_template_dirs('templates')
+        except AttributeError:
+            # Django <= 1.7
+            app_template_dirs = app_directories.app_template_dirs
+        
+        # Find the find_template_loader function (it moved in Django 1.8)
+        try:
+            # Django >= 1.8
+            find_template_loader = context.template.engine.find_template_loader
+        except AttributeError:
+            # Django <= 1.7
+            from django.template.loader import find_template_loader
+        
         # Store a dictionary in the template context mapping template
         # names to the lists of template directories available to
         # search for that template. Each time a template is loaded, its
