@@ -6,7 +6,13 @@ PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIRNAME = PROJECT_ROOT.split(os.sep)[-1]
 ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
 TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
-TEST_RUNNER = "django.test.simple.DjangoTestSuiteRunner"
+
+try:
+    import django.test.runner
+    TEST_RUNNER = "django.test.runner.DiscoverRunner"
+except ImportError as e:
+    TEST_RUNNER = "django.test.simple.DjangoTestSuiteRunner"
+
 SECRET_KEY = "hi mom"
 
 DATABASES = {
