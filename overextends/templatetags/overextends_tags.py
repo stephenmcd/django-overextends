@@ -90,6 +90,8 @@ class OverExtendsNode(ExtendsNode):
         # is requested.
         for loader in loaders:
             dirs = context[context_name][name]
+            if not dirs:
+                break
             try:
                 source, path = loader.load_template_source(name, dirs)
             except TemplateDoesNotExist:
