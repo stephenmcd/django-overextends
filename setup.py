@@ -16,7 +16,7 @@ setup(
     packages = find_packages(),
     install_requires = [
         "sphinx-me >= 0.1.2",
-        "django >= 1.4",
+        "django >= 1.7, < 1.9",
     ],
     classifiers = [
         "Development Status :: 5 - Production/Stable",
