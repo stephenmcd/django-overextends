@@ -45,8 +45,6 @@ class Tests(TestCase):
         # Add the test apps to INSTALLED_APPS.
         self.unique_id = str(uuid4()).replace("-", "")
         self.test_apps = ["app%s%s" % (i, self.unique_id) for i in range(10)]
-        settings.INSTALLED_APPS = list(settings.INSTALLED_APPS)
-        settings.INSTALLED_APPS.extend(self.test_apps)
 
         # Create the app directories with the test template.
         for test_app in self.test_apps:
@@ -90,13 +88,16 @@ class Tests(TestCase):
         """
         Ensure the test string appear in the rendered template.
         """
-        html = get_template(self.unique_id).render(Context())
-        previous = ""
-        for test_string in ["project"] + self.test_apps:
-            self.assertTrue(test_string in html)
-            if previous:
-                self.assertTrue(html.index(test_string) < html.index(previous))
-            previous = test_string
+        with self.modify_settings(INSTALLED_APPS={
+                    'prepend': self.test_apps
+                }):
+            html = get_template(self.unique_id).render(Context())
+            previous = ""
+            for test_string in ["project"] + self.test_apps:
+                self.assertTrue(test_string in html)
+                if previous:
+                    self.assertTrue(html.index(test_string) < html.index(previous))
+                previous = test_string
 
     def tearDown(self):
         """
