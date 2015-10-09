@@ -90,6 +90,19 @@ django-overextends by adding the ``overextends`` app to the
         'overextends',
     )
 
+For Django 1.9+ you must add overextends to the `builtins` key of your `TEMPLATES` setting::
+
+    TEMPLATES = [
+        {
+            'BACKEND': 'django.template.backends.django.DjangoTemplates',
+            'APP_DIRS': True,
+            'OPTIONS': {
+                'builtins': ['overextends.templatetags.overextends_tags'],
+            }
+        },
+    ]
+
+
 Note that while the ``overextends`` tag is provided by the package
 ``overextends.templatetags.overextends_tags``, it is unnecessary to use
 ``{% load overextends_tags %}`` in your templates. Like the ``extends``
