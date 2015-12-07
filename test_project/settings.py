@@ -27,6 +27,16 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.app_directories.Loader',
 )
 
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'builtins': ['overextends.templatetags.overextends_tags'],
+        }
+    },
+]
+
 INSTALLED_APPS = (
     'overextends',
 )
