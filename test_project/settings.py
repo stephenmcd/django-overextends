@@ -31,6 +31,7 @@ TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
+        'DIRS': TEMPLATE_DIRS,
         'OPTIONS': {
             'builtins': ['overextends.templatetags.overextends_tags'],
         }
@@ -40,4 +41,3 @@ TEMPLATES = [
 INSTALLED_APPS = (
     'overextends',
 )
-
