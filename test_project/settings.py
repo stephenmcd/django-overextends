@@ -2,10 +2,11 @@
 
 import os
 
+import django
+
 PROJECT_ROOT = os.path.dirname(os.path.abspath(__file__))
 PROJECT_DIRNAME = PROJECT_ROOT.split(os.sep)[-1]
 ROOT_URLCONF = "%s.urls" % PROJECT_DIRNAME
-TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
 
 try:
     import django.test.runner
@@ -26,15 +27,21 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
+TEMPLATE_DIRS = (os.path.join(PROJECT_ROOT, "templates"),)
+
+TEMPLATE_OPTIONS = {}
+if django.VERSION >= (1, 9):
+    # only set builtins option on Django >= 1.9
+    TEMPLATE_OPTIONS = {
+        'builtins': ['overextends.templatetags.overextends_tags'],
+    }
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'APP_DIRS': True,
         'DIRS': TEMPLATE_DIRS,
-        'OPTIONS': {
-            'builtins': ['overextends.templatetags.overextends_tags'],
-        }
+        'OPTIONS': TEMPLATE_OPTIONS
     },
 ]
 
