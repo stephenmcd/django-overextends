@@ -55,13 +55,18 @@ class OverExtendsNode(ExtendsNode):
             # Django <= 1.7
             app_template_dirs = app_directories.app_template_dirs
         
-        # Find the find_template_loader function (it moved in Django 1.8)
+        # Find the find_template_loader function, and appropriate template
+        # settings (changed in Django 1.8)
         try:
             # Django >= 1.8
             find_template_loader = context.template.engine.find_template_loader
+            template_dirs = context.template.engine.dirs
+            template_loaders = context.template.engine.loaders
         except AttributeError:
             # Django <= 1.7
             from django.template.loader import find_template_loader
+            template_dirs = list(settings.TEMPLATE_DIRS)
+            template_loaders = settings.TEMPLATE_LOADERS
         
         # Store a dictionary in the template context mapping template
         # names to the lists of template directories available to
@@ -71,7 +76,7 @@ class OverExtendsNode(ExtendsNode):
         if context_name not in context:
             context[context_name] = {}
         if name not in context[context_name]:
-            all_dirs = list(settings.TEMPLATE_DIRS) + list(app_template_dirs)
+            all_dirs = template_dirs + list(app_template_dirs)
             # os.path.abspath is needed under uWSGI, and also ensures we
             # have consistent path separators across different OSes.
             context[context_name][name] = list(map(os.path.abspath, all_dirs))
@@ -80,7 +85,7 @@ class OverExtendsNode(ExtendsNode):
         # other loaders like the ``cached`` template loader, unwind its
         # internal loaders and add those instead.
         loaders = []
-        for loader_name in settings.TEMPLATE_LOADERS:
+        for loader_name in template_loaders:
             loader = find_template_loader(loader_name)
             loaders.extend(getattr(loader, "loaders", [loader]))
 
