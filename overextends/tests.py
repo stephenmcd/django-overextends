@@ -91,7 +91,7 @@ class Tests(TestCase):
         with self.modify_settings(INSTALLED_APPS={
                     'prepend': self.test_apps
                 }):
-            html = get_template(self.unique_id).render(Context())
+            html = get_template(self.unique_id).render({})
             previous = ""
             for test_string in ["project"] + self.test_apps:
                 self.assertTrue(test_string in html)
